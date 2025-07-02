@@ -11,7 +11,7 @@ const Navbar = () => {
       </Link>
       <div className="flex-between gap-5">
         {/* Clerk user management TODO */}
-        <MobileNav/>
+        <MobileNav />
       </div>
     </nav>
   )
