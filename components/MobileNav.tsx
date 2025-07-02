@@ -4,6 +4,7 @@ import {
   Sheet,
   SheetClose,
   SheetContent,
+  SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
 import { sidebarLinks } from "@/constants"
@@ -16,10 +17,11 @@ const MobileNav = () => {
   return (
     <section className="w-full max-w-[264px]">
         <Sheet>
-            <SheetTrigger asChild>
+              <SheetTrigger asChild>
                 <Image src="/icons/hamburger.svg" alt="Hamburger menu" width={36} height={36} className="cursor-pointer sm:hidden"/>     
             </SheetTrigger>
-            <SheetContent side="left" className="border-none bg-dark-1">
+              <SheetContent side="left" className="border-none bg-dark-1">
+                  <SheetTitle hidden>Video Calling application</SheetTitle>
                 <Link href="/" className="flex items-center gap-1">
                     <Image src="/icons/logo.svg" alt="Logo" height={32} width={32} className="max-sm:size-10" />
                     <p className="text-[26px] font-extrabold text-white">Yoom</p>
