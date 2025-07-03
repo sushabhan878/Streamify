@@ -1,9 +1,11 @@
 import React, { ReactNode } from 'react'
-
-const RootLayout = ({children}: {children: ReactNode}) => {
+import StreamVideoProvider from '@/providers/StreamClientProvider'
+const RootLayout = ({ children }: { children: ReactNode }) => {
   return (
-      <main>
+    <main>
+      <StreamVideoProvider>
         {children}
+      </StreamVideoProvider>
     </main>
   )
 }

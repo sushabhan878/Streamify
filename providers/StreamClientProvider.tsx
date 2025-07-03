@@ -1,22 +1,38 @@
+import { tokenProvider } from "@/actions/stream.actions";
+import Loader from "@/components/Loader";
+import { useUser } from "@clerk/nextjs";
 import {
-    StreamCall,
     StreamVideo,
     StreamVideoClient,
-    User,
 } from "@stream-io/video-react-sdk";
+import { ReactNode, useEffect, useState } from "react";
 
 const apiKey = process.env.NEXT_PUBLIC_STREAM_API_KEY
 
-const client = new StreamVideoClient({ apiKey, user, token });
-const call = client.call("default", "my-first-call");
-call.join({ create: true });
+export const StreamVideoProvider = ({ children }: { children: ReactNode }) => {
+    const [videoClient, setVideoClient] = useState<StreamVideoClient>()
+    const { user, isLoaded } = useUser()
+    useEffect(() => {
+        if (!isLoaded || !user) return
+        if (!apiKey) throw new Error("Stream AOI Key missing")
+        const client = new StreamVideoClient({
+            apiKey,
+            user: {
+                id: user?.id,
+                name: user?.username || user?.id,
+                image: user?.imageUrl
+            },
+            tokenProvider,
+        })
+        setVideoClient(client)
 
-export const MyApp = () => {
+    }, [user, isLoaded])
+    if (!videoClient) return <Loader />
     return (
-        <StreamVideo client={client}>
-            <StreamCall call={call}>
-        /* <MyVideoUI /> */
-            </StreamCall>
+        <StreamVideo client={videoClient}>
+            {children}
         </StreamVideo>
     );
 };
+
+export default StreamVideoProvider
