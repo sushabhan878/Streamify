@@ -130,9 +130,28 @@
   .bg-blue-1 {
     @apply bg-[#0e78f9];
   }
+  .bg-orange-1 {
+    @apply bg-[#ff742e];
+  }
+  .bg-purple-1 {
+    @apply bg-[#830ef9];
+  }
+  .bg-yellow-1 {
+    @apply bg-[#f9a90e];
+  }
+  .bg-sky-1 {
+    @apply bg-[#c9ddff];
+  }
+  .bg-sky-2 {
+    @apply bg-[#ecf0ff];
+  }
+  .bg-sky-3 {
+    @apply bg-[#f5fcff];
+  }
   .text-sky-1 {
     @apply text-[#c9ddff];
   }
+
   .flex-center {
     @apply flex justify-center items-center;
   }
