@@ -7,13 +7,16 @@ import { StreamCall, StreamTheme } from '@stream-io/video-react-sdk'
 import React, { useState } from 'react'
 import Loader from '@/components/Loader'
 
+const Meeting = (props: { params: Promise<{ id: string }> }) => {
+  const params = React.use(props.params)  // 👈 unwrap the promise
+  const id = params.id
 
-const Meeting = ({ params: { id } }: { params: { id: string } }) => {
   const { user, isLoaded } = useUser()
   const [isSetupComplete, setIsSetupComplete] = useState(false)
   const { call, isCallLoading } = useGetCallById(id)
 
-  if (!isCallLoading || !isLoaded) return <Loader />
+  if (isCallLoading || !isLoaded) return <Loader />
+
   return (
     <main className='h-screen w-full'>
       <StreamCall call={call}>

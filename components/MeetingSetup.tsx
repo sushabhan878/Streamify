@@ -2,7 +2,7 @@
 const MeetingSetup = () => {
     return (
         <div>
-
+            Meeting Setup
         </div>
     )
 }
