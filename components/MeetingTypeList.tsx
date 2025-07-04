@@ -27,8 +27,8 @@ const MeetingTypeList = () => {
             if (!value.dateTime) {
                 toast("Please select a date and time.")
             }
-            const Id = crypto.randomUUID()
-            const call = client.call(callType, Id)   /// Doubt
+            const id = crypto.randomUUID()
+            const call = client.call(callType, id)   /// Doubt
             if (!call) throw new Error("Failed to create call")
             const startsAt = value.dateTime.toISOString() || new Date(Date.now()).toISOString()
             const description = value.description || "Instant Meeting"
