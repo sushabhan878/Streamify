@@ -52,6 +52,7 @@ const MeetingTypeList = () => {
             toast("Failed to create meeting")
         }
     }
+    const meetingLink = `${process.env.NEXT_PUBLIC_BASE_URL}/meeting/${callDetails?.id}`
     return (
         <section className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-4">
             <HomeCard
@@ -118,8 +119,8 @@ const MeetingTypeList = () => {
                     buttonIcon="/icons/copy.svg"
                     buttonText="Copy Meeting Link"
                     handleClick={() => {
-                        // navigator.clipboard.writeText(meetingLink)
-                        // toast("Link Copied Successfully")
+                        navigator.clipboard.writeText(meetingLink)
+                        toast("Link Copied Successfully")
                     }}
                     image="/icons/checked.svg"
                 />
