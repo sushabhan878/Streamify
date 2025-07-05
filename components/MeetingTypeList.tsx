@@ -7,6 +7,8 @@ import MeetingModal from "./MeetingModal"
 import { useUser } from "@clerk/nextjs"
 import { Call, useStreamVideoClient } from "@stream-io/video-react-sdk"
 import { toast } from "sonner"
+import { Textarea } from "./ui/textarea"
+import ReactDatePicker from "react-datepicker"
 
 const MeetingTypeList = () => {
     const router = useRouter()
@@ -80,6 +82,48 @@ const MeetingTypeList = () => {
                 handleClick={() => setMeetingState("isJoiningMeeting")}
                 className="bg-yellow-1"
             />
+            {!callDetails ? (
+                <MeetingModal
+                    isOpen={meetingState === "isScheduleMeeting"}
+                    onClose={() => setMeetingState(undefined)}
+                    title="Create Meeting"
+                    handleClick={createMeeting}
+                >
+                    <div className="flex flex-col gap-2.5">
+                        <label className="text-base text-normal leading-[22px] text-sky-300">Add a description</label>
+                        <Textarea className="border-none bg-sky-50 text-black opacity-80 focus-visible:ring-0 focus-visible:ring-offset-0" onChange={(e) => {
+                            setValue({ ...value, description: e.target.value })
+                        }} />
+                    </div>
+                    <div className="flex w-full flex-col gap-2.5">
+                        <label className="text-base text-normal leading-[22px] text-sky-300">Swlect Date and Time</label>
+                        <ReactDatePicker className=" w-full rounded p-2 border-none bg-sky-50 text-black opacity-80 focus:outline-none" selected={value.dateTime} onChange={(date) => {
+                            setValue({ ...value, dateTime: date! })
+                        }}
+                            showTimeSelect
+                            timeFormat="HH:mm"
+                            timeIntervals={15}
+                            timeCaption="time"
+                            dateFormat="MMMM d, yyyy h:mm aa" />
+
+
+                    </div>
+                </MeetingModal>
+            ) : (
+                <MeetingModal
+                    isOpen={meetingState === "isScheduleMeeting"}
+                    onClose={() => setMeetingState(undefined)}
+                    title="Meeting Created"
+                    className="text-center"
+                    buttonIcon="/icons/copy.svg"
+                    buttonText="Copy Meeting Link"
+                    handleClick={() => {
+                        // navigator.clipboard.writeText(meetingLink)
+                        // toast("Link Copied Successfully")
+                    }}
+                    image="/icons/checked.svg"
+                />
+            )}
             <MeetingModal
                 isOpen={meetingState === "isInstantMeeting"}
                 onClose={() => setMeetingState(undefined)}
