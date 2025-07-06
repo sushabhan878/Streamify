@@ -10,11 +10,8 @@ export const useGetCalls = () => {
 
     useEffect(() => {
         const loadCalls = async () => {
-            if (!client || !user?.id) {
-                return
-            } else {
-              setIsLoading(true)  
-            }
+            if (!client || !user?.id) return
+            setIsLoading(true)
             try {
                 const { calls } = await client.queryCalls({
                     sort: [{
@@ -22,12 +19,12 @@ export const useGetCalls = () => {
                         direction: -1
                     }], filter_conditions: {
                         starts_at: {
-                            $exiests: true
+                            $exists: true
                         },
                         $or: [
                             { created_by_user_id: user.id },
                             {
-                                menubars: {
+                                members: {
                                 $in: [user.id]
                             }}
                         ]
@@ -54,7 +51,7 @@ export const useGetCalls = () => {
     return {
         endedCalls,
         upcomingCalls,
-        recordings: calls,
+        callRecordings: calls,
         isLoading
     }
 }
