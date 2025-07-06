@@ -46,7 +46,7 @@ const CallList = ({ type }: { type: "ended" | "upcoming" | "recordings" }) => {
                 const recordings = callData.filter(call => call.recordings.length > 0).flatMap(call => call.recordings)
 
                 setRecordings(recordings)
-            } catch (error) {
+            } catch {
                 toast("Error fetching recordings")
             }
         }
