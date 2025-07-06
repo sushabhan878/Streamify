@@ -3,6 +3,10 @@ import { useUser } from '@clerk/nextjs'
 import React from 'react'
 import { Copy } from 'lucide-react'
 import { toast } from 'sonner'
+import { Button } from '@/components/ui/button'
+import { useGetCallById } from '@/hooks/useGetCallById'
+import { useStreamVideoClient } from '@stream-io/video-react-sdk'
+import { useRouter } from 'next/navigation'
 
 const Table = ({ title, description, copyable = false }: { title: string, description: string, copyable?: boolean }) => {
   const handleCopy = () => {
@@ -33,6 +37,22 @@ const PersonalRoom = () => {
   const { user } = useUser()
   const meetingId = user?.id
   const meetingLink = `${process.env.NEXT_PUBLIC_BASE_URL}/meeting/${meetingId}?personal=true`
+  const client = useStreamVideoClient()
+  const { call } = useGetCallById(meetingId!)
+  const router = useRouter()
+  const startMeetingRoom = async () => {
+    if (!client || !user) return
+
+    if (!call) {
+      const newCall = client.call("default", meetingId!)
+      await newCall.getOrCreate({
+        data: {
+          starts_at: new Date().toISOString()
+        }
+      })
+    }
+    router.push(`/meeting/${meetingId}?personal=true`)
+  }
   return (
     <section className='flex size-full flex-col gap-10 text-white'>
       <h1 className='text-3xl font-bold'>Personal Room</h1>
@@ -40,6 +60,17 @@ const PersonalRoom = () => {
         <Table title="Topic" description={`${user?.username}'s Meeting Room`} />
         <Table title="Meeting ID" description={meetingId!} />
         <Table title="Invitation Link" description={meetingLink} copyable />
+      </div>
+      <div className='flex gap-5'>
+        <Button className='bg-blue-1' onClick={startMeetingRoom}>
+          Start Meeting
+        </Button>
+        <Button className='bg-dark-3 ' onClick={() => {
+          navigator.clipboard.writeText(meetingLink)
+          toast("Link copied to clipboard!")
+        }}>
+          Copy Invitation
+        </Button>
       </div>
     </section>
   )
