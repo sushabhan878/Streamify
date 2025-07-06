@@ -49,7 +49,6 @@ const MeetingTypeList = () => {
             }
             toast("Meeting Created.")
         } catch (error) {
-            console.log(error)
             toast("Failed to create meeting")
         }
     }
