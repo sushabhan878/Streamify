@@ -39,7 +39,7 @@ export default function RootLayout({
           colorInputText: "#fff",
         },
         layout: {
-          logoImageUrl: "/icons/yoom-logo.svg",
+          logoImageUrl: "/icons/streamify-logo.svg",
           socialButtonsPlacement: "bottom",
         }
       }}>
