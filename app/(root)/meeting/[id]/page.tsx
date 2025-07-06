@@ -11,7 +11,7 @@ const Meeting = (props: { params: Promise<{ id: string }> }) => {
   const params = React.use(props.params)  // 👈 unwrap the promise
   const id = params.id
 
-  const { user, isLoaded } = useUser()
+  const { isLoaded } = useUser()
   const [isSetupComplete, setIsSetupComplete] = useState(false)
   const { call, isCallLoading } = useGetCallById(id)
 
